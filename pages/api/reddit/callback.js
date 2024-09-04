@@ -1,5 +1,6 @@
 // pages/api/reddit/callback.js
 
+import { saveRedditToken } from '@/utils/redditData';
 import axios from 'axios';
 
 export default async function handler(req, res) {
@@ -10,7 +11,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const response = await axios.post(
+        const { access_token, refresh_token, expires_in } = await axios.post(
             'https://www.reddit.com/api/v1/access_token',
             new URLSearchParams({
                 grant_type: 'authorization_code',
@@ -26,13 +27,18 @@ export default async function handler(req, res) {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
             }
-        );
+        ).then(res=>{return res.data});
+        
+        const {name} = await fetch('https://oauth.reddit.com/api/v1/me', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${access_token}`,
+            },
+        }).then(res=>{return res.json()})
 
-        const { access_token, refresh_token, expires_in } = response.data;
-
-        // You can store the tokens in the session or database as needed
-
+        
         // Redirect to the homepage with success message
+        await saveRedditToken(access_token, refresh_token, expires_in,name,service_id,auth_token);
         res.redirect(`/?token=${access_token}`);
     } catch (error) {
         console.error(error);

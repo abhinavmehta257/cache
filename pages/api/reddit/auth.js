@@ -10,7 +10,7 @@ export default function handler(req, res) {
         state,
         redirect_uri: process.env.REDDIT_REDIRECT_URI,
         duration: 'permanent',
-        scope: 'identity'
+        scope: 'identity history read'
     });
 
     const authUrl = `https://www.reddit.com/api/v1/authorize?${params.toString()}`;
