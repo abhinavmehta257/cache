@@ -30,7 +30,7 @@ function Bookmarks() {
         <div className='mt-[24px]'>
           { bookmarks ?
             bookmarks.map((bookmark,index)=>(
-              <BookmarkCollapsible bookmarkService={bookmark}/>
+              <BookmarkCollapsible key={index} bookmarkService={bookmark}/>
             ))
             : <Card />
           }

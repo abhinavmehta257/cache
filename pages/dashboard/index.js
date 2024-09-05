@@ -4,7 +4,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import BottomNavbar from '@/components/BottomNavbar';
 import { Router, useRouter } from 'next/router';
 
-function dashboard() {
+function Dashboard() {
   const router = useRouter();
   useEffect(()=>{
     router.push('dashboard/home')
@@ -14,4 +14,4 @@ function dashboard() {
   )
 }
 
-export default withAuth(dashboard)
+export default withAuth(Dashboard)
