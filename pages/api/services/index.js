@@ -1,25 +1,46 @@
-import { URLSearchParams } from 'url';
-import cookie from 'cookie';
+import Service from '@/model/service';
+import connectDB from '../lib/connectDB';
+import { verifyToken } from '../lib/verifyJWT';
+import mongoose from 'mongoose';
 
-export default async function handler(req, res) {
-     // Parse cookies
-    const cookies = cookie.parse(req.headers.cookie || '');
-    const authToken = cookies.authToken; // Assuming the token is stored in a cookie named 'token'
-    console.log(authToken);
-    if (!authToken) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-    const services = await fetch(`${process.env.NEXT_PUBLIC_XANO_AUTH_API_BASE_URL}/api:G4709Pzi/services`,{
-        headers:{
-            'Authorization':`${authToken}`
+async function handler(req, res) {
+    await connectDB();
+    const userId = new mongoose.Types.ObjectId(req.user._id);
+    console.log(userId);
+    
+    const services = await Service.aggregate([
+        {
+            $lookup: {
+                from: "userservices",
+                let: { serviceId: "$_id" }, // Pass the service _id from Service
+                pipeline: [
+                    { 
+                        $match: { 
+                            $expr: { 
+                                $and: [
+                                    { $eq: ["$service_id", "$$serviceId"] },  // Match service_id
+                                    { $eq: ["$user_id", userId] }  // Match user_id
+                                ]
+                            }
+                        }
+                    }
+                ],
+                as: "service_details"
+            }
+        },
+        {
+            $project: {
+                _id:1,
+                service_name:1,
+                service_url:1,
+                permissions:1,
+                isConnected: { $gt: [{ $size: "$service_details" }, 0] }  // Return true if there's a match
+            }
         }
-    })
-    .then(response => {return response.json()})
-    .catch(err=>console.log(err))
-    console.log(services);
+    ]);
     
     res.json(services);
 }
 
 
+export default (req, res) => verifyToken(req, res, () => handler(req, res));

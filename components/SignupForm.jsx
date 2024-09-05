@@ -5,7 +5,7 @@ import { Router, useRouter } from 'next/router';
 
 function SignupForm() {
   const [formData, setFormData] = useState({
-    name: '',
+    username: '',
     email: '',
     password: '',
     passwordConfirmation: ''
@@ -14,7 +14,7 @@ function SignupForm() {
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-
+  const router = useRouter();
 
   const handleChange = (e) => {
     setFormData({
@@ -26,8 +26,8 @@ function SignupForm() {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.name) {
-      newErrors.name = 'name is required';
+    if (!formData.username) {
+      newErrors.username = 'username is required';
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,7 +62,7 @@ function SignupForm() {
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_XANO_AUTH_API_BASE_URL}/api:tc1UdUdf/auth/signup`, {
+      const response = await fetch(`/api/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -80,6 +80,8 @@ function SignupForm() {
       }
 
       const data = await response.json();
+      console.log(data);
+      
       const { authToken } = data;
 
       // Save token in cookies
@@ -87,6 +89,7 @@ function SignupForm() {
 
       // Show success toast
       toast.success('Signup successful!');
+      router.push('/dashboard')
     } catch (error) {
       console.error('Error:', error);
     }
@@ -102,15 +105,15 @@ function SignupForm() {
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <div>
-                    <label className="text-gray-700 dark:text-gray-200" htmlFor="name">name</label>
+                    <label className="text-gray-700 dark:text-gray-200" htmlFor="username">username</label>
                     <input 
-                    id="name" 
+                    id="username" 
                     type="text" 
-                    value={formData.name}
+                    value={formData.username}
                     onChange={handleChange}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
                     />
-                    {errors.name && <p className="text-red-500">{errors.name}</p>}
+                    {errors.username && <p className="text-red-500">{errors.username}</p>}
                 </div>
 
                 <div>

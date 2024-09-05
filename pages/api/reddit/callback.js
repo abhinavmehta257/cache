@@ -2,9 +2,11 @@
 
 import { saveRedditToken } from '@/utils/redditData';
 import axios from 'axios';
+import { verifyToken } from '../lib/verifyJWT';
 
-export default async function handler(req, res) {
-    const { code, state } = req.query;
+async function handler(req, res) {
+    const { code, state,service_id } = req.query;
+    const user_id = req.user._id;
 
     if (!code || !state) {
         return res.status(400).json({ error: 'Invalid request' });
@@ -38,10 +40,14 @@ export default async function handler(req, res) {
 
         
         // Redirect to the homepage with success message
-        await saveRedditToken(access_token, refresh_token, expires_in,name,service_id,auth_token);
-        res.redirect(`/?token=${access_token}`);
+        const redditToken = await saveRedditToken(access_token, refresh_token, expires_in,name,"66d988fd2ac34f51149d153e",user_id);
+        if(!redditToken){
+            return res.status(500).json({message:"Internal server error"})
+        }
+        res.redirect(`/dashboard/services?token=${access_token}`);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Token exchange failed' });
     }
 }
+export default (req, res) => verifyToken(req, res, () => handler(req, res));

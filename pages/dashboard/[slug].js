@@ -23,7 +23,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className='p-[16px]'>
+    <div className='px-[16px] py-[32px] dark:bg-dark-background h-[100vh] max-w-[420px] mx-[auto]'>
       {renderComponent()}
       <BottomNavbar/>
     </div>

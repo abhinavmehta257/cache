@@ -49,7 +49,7 @@ function SigninForm() {
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_XANO_AUTH_API_BASE_URL}/api:tc1UdUdf/auth/login`, {
+      const response = await fetch(`/api/auth/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

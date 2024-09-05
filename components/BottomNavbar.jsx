@@ -27,24 +27,24 @@ const BottomNavbar = () => {
     <BottomNavigation
       value={value}
       onChange={changeHandler}
-      className="fixed bottom-0 left-0 right-0 bg-[#F7FAFC] border-t border-[#E8EDF2]"
+      className="fixed bottom-0 left-0 max-w-[420px] mx-auto right-0 dark:bg-dark-background"
     >
       <BottomNavigationAction
         label="Home"
         value="home"
-        icon={value === 'home' ? <HomeIcon style={{ color: '#0D141C' }} /> : <HomeOutlinedIcon style={{ color: '#4F7396' }} />}
+        icon={value === 'home' ? <HomeIcon className='text-primary-text dark:text-light-text' /> : <HomeOutlinedIcon style={{ color: '#4F7396' }} />}
         style={{ color: value === 'home' ? '#0D141C' : '#4F7396' }}
       />
       <BottomNavigationAction
         label="Add"
         value="services"
-        icon={value === 'services' ? <AddCircleIcon style={{ color: '#0D141C' }} /> : <AddCircleOutlineIcon style={{ color: '#4F7396' }} />}
+        icon={value === 'services' ? <AddCircleIcon className='text-primary-text dark:text-light-text' /> : <AddCircleOutlineIcon style={{ color: '#4F7396' }} />}
         style={{ color: value === 'services' ? '#0D141C' : '#4F7396' }}
       />
       <BottomNavigationAction
         label="Profile"
         value="profile"
-        icon={value === 'profile' ? <PersonIcon style={{ color: '#0D141C' }} /> : <PersonOutlinedIcon style={{ color: '#4F7396' }} />}
+        icon={value === 'profile' ? <PersonIcon className='text-primary-text dark:text-light-text' /> : <PersonOutlinedIcon style={{ color: '#4F7396' }} />}
         style={{ color: value === 'profile' ? '#0D141C' : '#4F7396' }}
       />
     </BottomNavigation>

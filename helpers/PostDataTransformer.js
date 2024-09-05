@@ -1,18 +1,19 @@
-export function redditTransformPosts(posts) {
+import mongoose from "mongoose";
+
+export function redditTransformPosts(posts,user_id) {
     return posts.map(post => {
         const data = post.data;
+        
         return {
+            post_id:data.id,
             title: data.title,
+            user_id:new mongoose.Types.ObjectId(user_id),
             author: data.author,
-            subreddit: data.subreddit,
-            selftext: data.selftext,
-            url: data.url,
+            body: data.selftext,
             thumbnail: data.thumbnail,
-            num_comments: data.num_comments,
-            ups: data.ups,
-            created_utc: data.created_utc,
-            permalink: data.permalink,
-            is_self: data.is_self,
+            link: "https://reddit.com"+data.permalink,
+            service_id: new mongoose.Types.ObjectId("66d988fd2ac34f51149d153e"),
+            service_name:"reddit"
         };
     });
 }

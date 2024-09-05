@@ -1,32 +1,34 @@
-export async function saveRedditToken(token,refresh_token,token_expires_at,reddit_name,services_id,auth_token){
+import UserService from "@/model/userService";
+import mongoose from "mongoose";
+
+export async function saveRedditToken(access_token,refresh_token,token_expires_at,user_name,service_id,user_id){
     const data = {
-        "access_token": token,
-        "refresh_token": "",
-        "token_expires_at": 0,
-        "user_name": reddit_name,
-        "services_id": null
+        user_id:new mongoose.Types.ObjectId(user_id),
+        user_name:user_name,
+        service_id:new mongoose.Types.ObjectId(service_id),
+        access_token:access_token,
+        refresh_token:refresh_token,
+        token_expires_at:token_expires_at,
       };
-    const response = await fetch(`${process.env.XANO_API_BASE_URL}/users/${userId}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
     
+      try{
+        const userService = new UserService(data);
+        await userService.save();
+        return userService;
+      }catch(err){
+        console.log(err);
+        
+        return null;
+      }
+
+      
 }
 
-export async function getRedditToken(userId = '14471e3e-1529-4819-b315-28e4cc4dd115'){
-    const {reddit_token,reddit_name} = await fetch(`${process.env.XANO_API_BASE_URL}/users/${userId}`, {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-    .then(response => response.json())
-    .catch(error => console.error('Error:', error));
-    return {reddit_token,reddit_name};
+export async function getRedditToken(userId,service_id){
+  console.log(userId,service_id);
+  
+    const {access_token,user_name} = await UserService.findOne({user_id:userId,service_id:service_id});
+    console.log({access_token,user_name});
+    
+    return {access_token,user_name};
 }

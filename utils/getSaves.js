@@ -1,6 +1,6 @@
-import { transformPosts } from "@/helpers/PostDataTransformer";
+import { redditTransformPosts } from "@/helpers/PostDataTransformer";
 
-export async function fetchRedditSaves(accessToken,username) {
+export async function fetchRedditSaves(accessToken,username,user_id) {
         const limit = 25; // Default limit is 25
         const sort = 'new'; // Default sort order is 'new'
         const after = null; // To fetch results after a specific item
@@ -12,7 +12,7 @@ export async function fetchRedditSaves(accessToken,username) {
         before,
     });
     
-    const apiUrl = `${process.env.REDDIT_API_URL}/user/${username}/saved?${queryParams}`;
+    const apiUrl = `${process.env.REDDIT_BASE_URL}/user/${username}/saved?${queryParams}`;
 
     try {
         const response = await fetch(apiUrl, {
@@ -27,8 +27,9 @@ export async function fetchRedditSaves(accessToken,username) {
         }
 
         const data = await response.json();
+        console.log(data);
         
-        return transformPosts(data.data.children);; // Contains the saved posts data
+        return redditTransformPosts(data.data.children,user_id);; // Contains the saved posts data
     } catch (error) {
         console.error('Error:', error);
         throw error; // Re-throw the error to handle it in the calling function

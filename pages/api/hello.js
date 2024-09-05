@@ -1,5 +1,17 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-export default function handler(req, res) {
-  res.status(200).json({ name: "John Doe" });
-}
+import user from "@/model/user";
+import connectDB from "./lib/connectDB";
+
+
+export default async function handler(req, res) {
+    await connectDB();
+    
+    const {name , age } = req.body;
+    const person = new user({
+        name:"name",
+        age:23
+    })
+    await person.save()
+    console.log("inside api",name , age)
+    res.status(200).json({ done: true })
+  }
