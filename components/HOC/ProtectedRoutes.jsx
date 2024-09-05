@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
-const withAuth = (WrappedComponent) => {
+function WithAuth(WrappedComponent) {
   return (props) => {
     const Router = useRouter();
 
@@ -18,4 +18,4 @@ const withAuth = (WrappedComponent) => {
   };
 };
 
-export default withAuth;
+export default WithAuth;
