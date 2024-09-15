@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
-function WithAuth(WrappedComponent) {
+function ProtectedRoutes(WrappedComponent) {
   return (props) => {
     const Router = useRouter();
 
@@ -18,4 +18,4 @@ function WithAuth(WrappedComponent) {
   };
 };
 
-export default WithAuth;
+export default ProtectedRoutes;
