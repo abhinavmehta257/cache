@@ -3,19 +3,23 @@ import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
 function ProtectedRoutes(WrappedComponent) {
-  return (props) => {
-    const Router = useRouter();
+  const Wrapper = (props) => {
+    const router = useRouter(); // Hook called at the top level
 
     useEffect(() => {
       const token = Cookies.get('authToken');
-      
+
       if (!token) {
-        Router.replace('/signin ');  // Redirect to login if not authenticated
+        router.replace('/signin'); // Correcting the route redirection
       }
-    }, []);
+    }, [router]);
 
     return <WrappedComponent {...props} />;
   };
-};
+
+  Wrapper.displayName = `ProtectedRoutes(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
+
+  return Wrapper;
+}
 
 export default ProtectedRoutes;
