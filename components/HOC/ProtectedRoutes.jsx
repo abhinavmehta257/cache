@@ -10,7 +10,7 @@ function ProtectedRoutes(WrappedComponent) {
       const token = Cookies.get('authToken');
 
       if (!token) {
-        router.replace('/signin'); // Correcting the route redirection
+        router.replace('/auth/signin'); // Correcting the route redirection
       }
     }, [router]);
 

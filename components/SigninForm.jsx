@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { Toaster, toast } from 'react-hot-toast';
 import { useRouter } from 'next/router';
+import Link from "next/link";
+
+export const metadata = {
+  title: "Sign In",
+  description: "Page description",
+};
 
 function SigninForm() {
   const [formData, setFormData] = useState({
@@ -83,53 +89,70 @@ function SigninForm() {
   };
 
   return (
-    <div className='flex justify-center items-center h-[100vh] w-full'>
-         <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
-            <Toaster />
-            <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">Signin</h2>
-
-            <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-
-                <div>
-                    <label className="text-gray-700 dark:text-gray-200" htmlFor="emailAddress">Email Address</label>
-                    <input 
-                    id="email" 
-                    type="email" 
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    />
-                    {errors.email && <p className="text-red-500">{errors.email}</p>}
-                </div>
-
-                <div>
-                    <label className="text-gray-700 dark:text-gray-200" htmlFor="password">Password</label>
-                    <input 
-                    id="password" 
-                    type="password" 
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
-                    />
-                    {errors.password && <p className="text-red-500">{errors.password}</p>}
-                </div>
-
-                </div>
-
-                <div className="flex justify-end mt-6">
-                <button 
-                    type="submit"
-                    className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-                >
-                    {isSubmitted ? "loading":"Submit"}
-                </button>
-                </div>
-            </form>
-        </section>
-    </div>
-   
+    <>
+      <>
+        <div className="mb-10">
+          <h1 className="text-4xl font-bold">Sign in to your account</h1>
+        </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div>
+              <label
+                className="mb-1 block text-sm font-medium text-gray-700"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                className="form-input w-full py-2"
+                placeholder="corybarker@email.com"
+                required
+                id="email" 
+                type="email" 
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label
+                className="mb-1 block text-sm font-medium text-gray-700"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <input
+                className="form-input w-full py-2"
+                autoComplete="on"
+                placeholder="••••••••"
+                required
+                id="password" 
+                type="password" 
+                value={formData.password}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="mt-6">
+            <button type="submit" className="btn w-full bg-gradient-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow hover:bg-[length:100%_150%]">
+              {isSubmitted ? "loading":"Submit"}
+            </button>
+          </div>
+        </form>
+        {/* Bottom link */}
+        <div className="mt-6 text-center">
+          <Link
+            className="text-sm text-gray-700 underline hover:no-underline"
+            href="/reset-password"
+          >
+            Forgot password
+          </Link>
+        </div>
+      </>
+    </>
   );
 }
 
 export default SigninForm;
+
+

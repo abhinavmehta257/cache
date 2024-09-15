@@ -1,6 +1,11 @@
 import { fetchPocketSaves } from "@/utils/getSaves";
 
 export default async function handler(req, res) {
-    const responce = await fetchPocketSaves("9577ce1d-14a6-ee32-e829-fd3244");
-    console.log(responce);
+    const youtube = google.youtube('v3');
+    const response = await youtube.playlistItems.list({
+      auth: oauth2Client,
+      part: 'snippet',
+      playlistId: 'WL', // Watch Later Playlist
+    });
+    console.log(response.data);
 }

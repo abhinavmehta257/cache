@@ -1,8 +1,9 @@
 import React from 'react'
+import Signout from './blocks/SignOut'
 
 function Profile() {
   return (
-    <div>Profile</div>
+    <div><Signout/></div>
   )
 }
 

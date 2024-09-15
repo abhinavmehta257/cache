@@ -7,7 +7,7 @@ function BookmarkCard({bookmark}) {
     window.open(link, "_blank")
   }
   return (
-    <div className='flex items-center  gap-[16px] rounded-xl' onClick={clickHandler}>
+    <div className='flex items-center cursor-pointer gap-[16px] rounded-xl' onClick={clickHandler}>
         <img class="w-[70px] h-[70px] relative rounded-lg" src={thumbnail} />
         <div className='flex flex-col w-[260px]'>
             <h3 className="self-stretch text-light-text font-medium font-['Inter'] text-[16px] text-ellipsis overflow-hidden w-full">
