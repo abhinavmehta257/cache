@@ -19,7 +19,7 @@ export const verifyToken = (req, res, next) => {
     req.user = decoded;
 
     // Proceed to the next middleware or route handler
-    next();
+    return next();
   } catch (error) {
     return res.status(403).redirect('/signin')
   }

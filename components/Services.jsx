@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ServiceCard from './blocks/ServiceCard'
-import Card from './skeletons/card';
+import Card from './skeletons/Card';
 
 function Services() {
   const [services, setServices] = useState(null);

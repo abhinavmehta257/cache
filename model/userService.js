@@ -21,11 +21,11 @@ const userServiceSchema = new mongoose.Schema({
   },
   refresh_token: {
     type: String,
-    required: true,
+    required: false,
   },
   token_expires_at: {
     type: Date,
-    required: true,
+    required: false,
   },
   created_at: {
     type: Date,

@@ -1,46 +1,16 @@
-// pages/index.js
+import { signIn } from "next-auth/react";
+import { toast } from "react-hot-toast";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import toast, { Toaster } from 'react-hot-toast';
-import axios from 'axios';
+export default function TwitterLoginButton() {
+  const handleLogin = () => {
+    signIn("twitter")
+      .then(() => toast.success("Successfully logged in with Twitter!"))
+      .catch(() => toast.error("Failed to log in with Twitter."));
+  };
 
-export default function Home() {
-    const router = useRouter();
-
-    useEffect(() => {
-        if (router.query.token) {
-            toast.success('Token generated successfully!');
-        }
-    }, [router.query.token]);
-
-    const handleRedditLogin = () => {
-        router.push('/api/reddit/auth');
-    };
-
-    async function getRedditSaves(){
-        const response = await axios({
-            url:"/api/reddit/get-saves",
-            method:"get"
-        })
-    }
-
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2">
-            <h1 className="text-2xl font-bold">Reddit OAuth 2.0 Example</h1>
-            <button
-                onClick={handleRedditLogin}
-                className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg"
-            >
-                Login with Reddit
-            </button>
-            <button
-                onClick={getRedditSaves}
-                className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg"
-            >
-                Get saves
-            </button>
-            <Toaster />
-        </div>
-    );
+  return (
+    <button onClick={handleLogin}>
+      <i className="fab fa-twitter"></i> Sign in with Twitter
+    </button>
+  );
 }

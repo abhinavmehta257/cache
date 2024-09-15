@@ -39,7 +39,7 @@ async function handler(req, res) {
         }
     ]);
     
-    res.json(services);
+    return res.json(services);
 }
 
 

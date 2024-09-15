@@ -1,4 +1,4 @@
-import { redditTransformPosts } from "@/helpers/PostDataTransformer";
+import { pocketTransformPosts, redditTransformPosts } from "@/helpers/PostDataTransformer";
 
 export async function fetchRedditSaves(accessToken,username,user_id) {
         const limit = 25; // Default limit is 25
@@ -35,3 +35,22 @@ export async function fetchRedditSaves(accessToken,username,user_id) {
         throw error; // Re-throw the error to handle it in the calling function
     }
 }
+export async function fetchPocketSaves(access_token, user_id) {
+    const response = await fetch('https://getpocket.com/v3/get', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        consumer_key: process.env.POCKET_CONSUMER_KEY,
+        access_token,
+        state: 'all',  // Options: 'unread', 'archive', or 'all' to specify saves
+        detailType: 'simple'
+      })
+    });
+  
+    const data = await response.json();
+    return pocketTransformPosts(data, user_id);
+  }
+  

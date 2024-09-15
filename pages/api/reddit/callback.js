@@ -1,6 +1,6 @@
 // pages/api/reddit/callback.js
 
-import { saveRedditToken } from '@/utils/redditData';
+import { saveToken } from '@/utils/redditData';
 import axios from 'axios';
 import { verifyToken } from '../lib/verifyJWT';
 
@@ -40,7 +40,7 @@ async function handler(req, res) {
 
         
         // Redirect to the homepage with success message
-        const redditToken = await saveRedditToken(access_token, refresh_token, expires_in,name,"66d988fd2ac34f51149d153e",user_id);
+        const redditToken = await saveToken(access_token, refresh_token, expires_in,name,"66d988fd2ac34f51149d153e",user_id);
         if(!redditToken){
             return res.status(500).json({message:"Internal server error"})
         }
