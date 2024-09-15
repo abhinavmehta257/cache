@@ -1,5 +1,6 @@
 import Bookmarks from '@/components/Bookmarks';
 import BottomNavbar from '@/components/BottomNavbar';
+import ProtectedRoutes from '@/components/HOC/ProtectedRoutes';
 import withAuth from '@/components/HOC/ProtectedRoutes';
 import Profile from '@/components/Profile';
 import Services from '@/components/Services';

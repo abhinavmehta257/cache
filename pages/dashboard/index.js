@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import BottomNavbar from '@/components/BottomNavbar';
 import { Router, useRouter } from 'next/router';
+import ProtectedRoutes from '@/components/HOC/ProtectedRoutes';
 
 function Dashboard() {
   const router = useRouter();
@@ -14,4 +15,4 @@ function Dashboard() {
   )
 }
 
-export default withAuth(Dashboard)
+export default ProtectedRoutes(Dashboard)
