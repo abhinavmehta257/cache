@@ -45,12 +45,11 @@ export async function fetchPocketSaves(access_token, user_id) {
       body: JSON.stringify({
         consumer_key: process.env.POCKET_CONSUMER_KEY,
         access_token,
-        state: 'all',  // Options: 'unread', 'archive', or 'all' to specify saves
+        state: 'all', 
         detailType: 'simple'
       })
     });
   
     const data = await response.json();
     return pocketTransformPosts(data, user_id);
-  }
-  
+}
