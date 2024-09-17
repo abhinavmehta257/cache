@@ -5,6 +5,9 @@ import connectDB from "../lib/connectDB";
 import groupByService from "@/helpers/groupByService";
 
 async function handler(req, res) {
+    if(req.method !="GET"){
+        return res.status(403).json({message:"Message not allowed"});
+    }
     try{
         await connectDB();
         const user_id = new mongoose.Types.ObjectId(req.user._id);

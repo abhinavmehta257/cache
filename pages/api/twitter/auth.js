@@ -7,6 +7,9 @@ const client = new TwitterApi({
 });
 
 async function handler(req, res) {
+  if(req.method !="GET"){
+      return res.status(403).json({message:"Message not allowed"});
+  }
   try {
     const { url, codeVerifier, state } = await client.generateOAuth2AuthLink(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/twitter/callback`,

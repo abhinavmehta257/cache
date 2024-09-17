@@ -15,6 +15,10 @@ export const verifyToken = (req, res, next) => {
     // Verify the token
     const decoded = jwt.verify(authToken, process.env.JWT_SECRET);
 
+    if(!decoded){
+      return res.status(403).redirect('/signin')
+    }
+
     // Add the decoded payload to the request object
     req.user = decoded;
 

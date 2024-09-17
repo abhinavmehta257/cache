@@ -4,6 +4,9 @@ import axios from 'axios';
 import { verifyToken } from '../lib/verifyJWT';
 
 async function handler(req, res) {
+  if(req.method !="GET"){
+      return res.status(403).json({message:"Message not allowed"});
+  }
   const redirect_url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/pocket/callback`
   try {
     const { data } = await axios.post('https://getpocket.com/v3/oauth/request', {

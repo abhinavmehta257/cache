@@ -4,6 +4,9 @@ import { verifyToken } from '../lib/verifyJWT';
 import mongoose from 'mongoose';
 
 async function handler(req, res) {
+    if(req.method !="GET"){
+        return res.status(403).json({message:"Message not allowed"});
+    }
     await connectDB();
     const userId = new mongoose.Types.ObjectId(req.user._id);
     console.log(userId);

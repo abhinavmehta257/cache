@@ -8,7 +8,7 @@ function ProtectedRoutes(WrappedComponent) {
 
     useEffect(() => {
       const token = Cookies.get('authToken');
-
+      
       if (!token) {
         router.replace('/auth/signin'); // Correcting the route redirection
       }

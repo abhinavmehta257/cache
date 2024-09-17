@@ -7,6 +7,11 @@ import saveBookmarks from "@/helpers/saveBookmarks";
 export default async function handler(req, res) {
     await connectDB();
 
+    if(req.method !="GET"){
+        return res.status(403).json({message:"Message not allowed"});
+    }
+    
+
     const userServices = await UserService.find({});
     if (!userServices) {
         return res.json({ message: "no services" });
