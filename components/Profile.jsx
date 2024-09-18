@@ -20,7 +20,7 @@ function Profile() {
     };
 
     fetchUser();
-  })
+  },[]);
   return (
     <div className='mt-4'>
       <h1 className="text-primary-text dark:text-light-text text-[28px] font-bold font-['Inter'] leading-[35px]">Profile</h1>

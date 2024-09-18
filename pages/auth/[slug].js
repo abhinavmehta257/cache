@@ -6,7 +6,7 @@ import authImg from "@/public/img/auth-img.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function auth() {
+export default function Auth() {
   const router = useRouter();
   const { slug } = router.query;
 

@@ -147,8 +147,15 @@ function SigninForm() {
           >
             Forgot password
           </Link>
+          <Link
+            className="text-sm text-gray-700 underline hover:no-underline"
+            href="/api/auth/login"
+          >
+            google
+          </Link>
         </div>
       </>
+      <Toaster/>
     </>
   );
 }

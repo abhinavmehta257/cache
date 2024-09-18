@@ -70,7 +70,9 @@ const filter = debounce((e) => {
           onChange={filter}
           className="p-[8px] focus:border-none border-dark-background rounded-[8px] w-full bg-dark-surface text-light-text"
         />
-        <Close className='absolute z-10 right-[10px] text-light-surface cursor-pointer'/>
+        <button onClick={()=> setSearchTerm('')}>
+          <Close className='absolute z-10 right-[10px] text-light-surface cursor-pointer'/>
+        </button>
         </div>
         <div className='mt-[24px]'>
         {
@@ -80,7 +82,7 @@ const filter = debounce((e) => {
             ))
           ) : searchTerm.trim() !== '' ? (
             searchesBookmarks.map((bookmark, index) => (
-              <div className='mt-4'><BookmarkCard key={index} bookmark={bookmark} /></div>
+              <div className='mt-4'  key={index} ><BookmarkCard bookmark={bookmark} /></div>
             ))
           ) : (
             <Card />

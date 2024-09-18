@@ -185,6 +185,7 @@ function SignupForm() {
         </div>
       </form>
 
+
       {/* Bottom link */}
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-500">
