@@ -27,7 +27,7 @@ const BottomNavbar = () => {
     <BottomNavigation
       value={value}
       onChange={changeHandler}
-      className="fixed bottom-0 left-0 max-w-[420px] mx-auto right-0 dark:bg-dark-background"
+      className="fixed bottom-0 left-0 max-w-[420px] mx-auto right-0 bg-dark-background"
     >
       <BottomNavigationAction
         value="home"

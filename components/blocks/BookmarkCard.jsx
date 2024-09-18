@@ -7,10 +7,10 @@ function BookmarkCard({bookmark}) {
     window.open(link, "_blank")
   }
   return (
-    <div className='flex items-center cursor-pointer gap-[16px] rounded-xl' onClick={clickHandler}>
-        <img class="w-[70px] h-[70px] relative rounded-lg" src={thumbnail} />
-        <div className='flex flex-col w-[260px]'>
-            <h3 className="self-stretch text-light-text font-medium font-['Inter'] text-[16px] text-ellipsis overflow-hidden w-full">
+    <div className='flex items-center cursor-pointer gap-4 rounded-xl w-full' onClick={clickHandler}>
+        <img class="w-[15%] aspect-square relative rounded-lg" src={thumbnail} />
+        <div className='flex flex-col w-[80%]'>
+            <h3 className="w-full text-ellipsis overflow-hidden whitespace-nowrap text-light-text font-medium font-['Inter'] text-[16px]">
                 {title}
             </h3>
             <p className="text-subtle-text font-normal font-['Inter'] leading-[21px] w-[160px] text-[14px] text-ellipsis overflow-hidden">By:{" "}{author}</p>

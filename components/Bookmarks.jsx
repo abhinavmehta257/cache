@@ -8,6 +8,7 @@ function Bookmarks() {
   const [bookmarks, setBookmarks] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchesBookmarks, setSearchesBookmarks] = useState([]);
+  
   useEffect(() => {
     const fetchServices = async () => {
       try {
@@ -26,41 +27,38 @@ function Bookmarks() {
   }, []);
   
   // Debounce function to limit the frequency of invoking the filter function
-function debounce(func, delay) {
-  let timeout;
-  return function (...args) {
-    const context = this;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(context, args), delay);
-  };
-}
+  function debounce(func, delay) {
+    let timeout;
+    return function (...args) {
+      const context = this;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(context, args), delay);
+    };
+  }
 
-// Modified filter function with debounce
-const filter = debounce((e) => {
-  const typedSearchTerm = e.target.value.trim();
-  setSearchTerm(typedSearchTerm);
-  console.log(typedSearchTerm);
-  
-  let bookmarksFound = [];
-  bookmarks.forEach(services => {
-    services.bookmarks.forEach(bookmark => {
-      const {author, title, body, service_name} = bookmark;
-      if (author.toLowerCase().includes(typedSearchTerm) || 
-          title.toLowerCase().includes(typedSearchTerm) || 
-          body.toLowerCase().includes(typedSearchTerm) || 
-          service_name.toLowerCase().includes(typedSearchTerm)) {
-        bookmarksFound.push(bookmark);
-      }
+  // Modified filter function with debounce
+  const filter = debounce((e) => {
+    const typedSearchTerm = e.target.value.trim();
+    setSearchTerm(typedSearchTerm);
+    
+    let bookmarksFound = [];
+    bookmarks.forEach(services => {
+      services.bookmarks.forEach(bookmark => {
+        const {author, title, body, service_name} = bookmark;
+        if (author.toLowerCase().includes(typedSearchTerm) || 
+            title.toLowerCase().includes(typedSearchTerm) || 
+            body.toLowerCase().includes(typedSearchTerm) || 
+            service_name.toLowerCase().includes(typedSearchTerm)) {
+          bookmarksFound.push(bookmark);
+        }
+      });
     });
-  });
-  
-  setSearchesBookmarks(bookmarksFound);
-}, 500);
-
-
+    
+    setSearchesBookmarks(bookmarksFound);
+  }, 500);
 
   return (
-    <div>
+    <div className='overflow-hidden'>
         <h1 className="text-primary-text dark:text-light-text text-[28px] font-bold font-['Inter'] leading-[35px]">Bookmarks</h1>
         <div className='mt-[16px] flex justify-center items-center relative'>
           <input
@@ -70,11 +68,11 @@ const filter = debounce((e) => {
           onChange={filter}
           className="p-[8px] focus:border-none border-dark-background rounded-[8px] w-full bg-dark-surface text-light-text"
         />
-        <button onClick={()=> setSearchTerm('')}>
+        {/* <button onClick={() => setSearchTerm('')}>
           <Close className='absolute z-10 right-[10px] text-light-surface cursor-pointer'/>
-        </button>
+        </button> */}
         </div>
-        <div className='mt-[24px]'>
+        <div className='mt-[24px] h-[500px] overflow-y-auto'>
         {
           bookmarks && searchTerm.trim() === '' ? (
             bookmarks.map((bookmark, index) => (
@@ -82,7 +80,7 @@ const filter = debounce((e) => {
             ))
           ) : searchTerm.trim() !== '' ? (
             searchesBookmarks.map((bookmark, index) => (
-              <div className='mt-4'  key={index} ><BookmarkCard bookmark={bookmark} /></div>
+              <div className='mt-4' key={index}><BookmarkCard bookmark={bookmark} /></div>
             ))
           ) : (
             <Card />
@@ -93,4 +91,4 @@ const filter = debounce((e) => {
   )
 }
 
-export default Bookmarks
+export default Bookmarks;
