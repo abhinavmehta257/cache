@@ -1,6 +1,7 @@
 import { ArrowRightSharp, ArrowDropDownSharp, Reddit } from '@mui/icons-material';
 import React, { useState } from 'react';
 import BookmarkCard from './BookmarkCard';
+import CollapsibleIcon from './CollapsibleIcon';
 
 function BookmarkCollapsible({ bookmarkService }) {
   const { service_name, count, bookmarks } = bookmarkService;
@@ -15,7 +16,7 @@ function BookmarkCollapsible({ bookmarkService }) {
       {/* Header Section */}
       <div className="flex gap-[16px] items-center cursor-pointer" onClick={toggleExpand}>
         <div className="w-[42px] h-[42px] rounded-[8px] bg-light-surface dark:bg-dark-surface p-2">
-          <Reddit className="text-primary-text dark:text-light-text" />
+          <CollapsibleIcon service_name={service_name}/>
         </div>
         <div className="flex-1">
           <h1 className="text-light-text text-base font-medium font-['Inter'] leading-normal">{service_name}</h1>

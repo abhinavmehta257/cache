@@ -12,9 +12,9 @@ export default async function handler(req, res) {
     }
     
 
-    const userServices = await UserService.find({});
-    if (!userServices) {
-        return res.json({ message: "no services" });
+    const userServices = await UserService.find({ service_name: { $ne: null } });
+    if (!userServices || userServices.length === 0) {
+        return res.json({ message: "No services found with non-null service names" });
     }
 
     // Loop through each user service and fetch saved content based on service_id

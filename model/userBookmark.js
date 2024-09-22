@@ -32,12 +32,12 @@ const userBookmarksSchema = new mongoose.Schema({
     },
     service_id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        required: false,
         ref: "Service"
     },
     service_name: {
         type: String,
-        required: true
+        required: false
     }
 });
 
