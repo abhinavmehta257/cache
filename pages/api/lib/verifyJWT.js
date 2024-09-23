@@ -9,7 +9,6 @@ export const verifyToken = (req, res, next) => {
 
   const cookies = cookie.parse(req.headers.cookie || '');
   const authToken = cookies.authToken || req.headers.authorization.split(' ')[1];
-  console.log(authToken);
   if (!authToken) {
     return res.status(401).json({ message: 'Authorization token missing' });
   }
@@ -21,12 +20,8 @@ export const verifyToken = (req, res, next) => {
     if(!decoded){
       return res.status(403).redirect('/signin')
     }
-
-    
     // Add the decoded payload to the request object
     req.user = decoded;
-
-
     // Proceed to the next middleware or route handler
     return next();
   } catch (error) {

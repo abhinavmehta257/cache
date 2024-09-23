@@ -26,7 +26,7 @@ const Signout = () => {
     <>
       <button
         onClick={handleSignout}
-        className="bg-red-500 text-white px-4 py-2 rounded-[8px] fixed bottom-20"
+        className="bg-red-500 text-white px-4 py-2 rounded-[8px]"
       >
         Sign Out
       </button>

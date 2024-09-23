@@ -72,7 +72,7 @@ function Bookmarks() {
           <Close className='absolute z-10 right-[10px] text-light-surface cursor-pointer'/>
         </button> */}
         </div>
-        <div className='mt-[24px] h-[500px] overflow-y-auto'>
+        <div className='mt-[24px] h-[400px] overflow-y-auto no-scrollbar'>
         {
           bookmarks && searchTerm.trim() === '' ? (
             bookmarks.map((bookmark, index) => (

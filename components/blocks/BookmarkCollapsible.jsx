@@ -12,7 +12,7 @@ function BookmarkCollapsible({ bookmarkService }) {
   };
 
   return (
-    <div className="mt-4 flex flex-col gap-[16px] bg-light-container dark:bg-dark-container">
+    <div className="mt-4 flex flex-col gap-[8px] bg-light-container dark:bg-dark-container">
       {/* Header Section */}
       <div className="flex gap-[16px] items-center cursor-pointer" onClick={toggleExpand}>
         <div className="w-[42px] h-[42px] rounded-[8px] bg-light-surface dark:bg-dark-surface p-2">
