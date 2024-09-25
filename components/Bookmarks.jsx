@@ -26,6 +26,10 @@ function Bookmarks() {
     fetchServices();
   }, []);
   
+  const handleDeleteBookmark = (deletedBookmarkId) => {
+    setBookmarks(prevBookmarks => prevBookmarks.filter(bookmark => bookmark._id !== deletedBookmarkId));
+  };
+
   // Debounce function to limit the frequency of invoking the filter function
   function debounce(func, delay) {
     let timeout;
@@ -72,15 +76,15 @@ function Bookmarks() {
           <Close className='absolute z-10 right-[10px] text-light-surface cursor-pointer'/>
         </button> */}
         </div>
-        <div className='mt-[24px] h-[400px] overflow-y-auto no-scrollbar'>
+        <div className='mt-[24px] h-[70vh] overflow-y-auto no-scrollbar'>
         {
           bookmarks && searchTerm.trim() === '' ? (
             bookmarks.map((bookmark, index) => (
-              <BookmarkCollapsible key={index} bookmarkService={bookmark} />
+              <BookmarkCollapsible key={index} bookmarkService={bookmark} onDelete={handleDeleteBookmark} />
             ))
           ) : searchTerm.trim() !== '' ? (
             searchesBookmarks.map((bookmark, index) => (
-              <div className='mt-4' key={index}><BookmarkCard bookmark={bookmark} /></div>
+              <div className='mt-4' key={index}><BookmarkCard bookmark={bookmark} onDelete={handleDeleteBookmark} /></div>
             ))
           ) : (
             <Card />

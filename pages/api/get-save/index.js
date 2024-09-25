@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     }
     
 
-    const userServices = await UserService.find({ service_name: { $ne: null } });
+    const userServices = await UserService.find();
     if (!userServices || userServices.length === 0) {
         return res.json({ message: "No services found with non-null service names" });
     }

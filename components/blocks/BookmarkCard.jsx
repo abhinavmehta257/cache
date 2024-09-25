@@ -1,7 +1,7 @@
 import { MoreVert, BookmarkOutlined } from '@mui/icons-material';
 import React, { useState, useEffect, useRef } from 'react';
 
-function BookmarkCard({bookmark}) {
+function BookmarkCard({bookmark, onDelete}) {
   const { title, author, body, thumbnail, link } = bookmark;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const cardRef = useRef(null); // To track clicks outside the component
@@ -52,7 +52,7 @@ function BookmarkCard({bookmark}) {
       const data = await response.json();
       console.log('Bookmark deleted successfully:', data);
       // Optionally, trigger any state updates or UI changes after deletion
-  
+      onDelete(bookmark._id);
     } catch (error) {
       console.error('Error deleting bookmark:', error);
     }

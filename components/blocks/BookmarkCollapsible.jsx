@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import BookmarkCard from './BookmarkCard';
 import CollapsibleIcon from './CollapsibleIcon';
 
-function BookmarkCollapsible({ bookmarkService }) {
+function BookmarkCollapsible({ bookmarkService, onDelete }) {
   const { service_name, count, bookmarks } = bookmarkService;
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -34,7 +34,7 @@ function BookmarkCollapsible({ bookmarkService }) {
       {isExpanded && (
         <div className="mt-4 flex flex-col gap-6">
           {bookmarks.slice(0, 4).map((bookmark, index) => (
-            <BookmarkCard key={index} bookmark={bookmark} />
+            <BookmarkCard key={index} bookmark={bookmark} onDelete={onDelete} />
           ))}
         </div>
       )}
