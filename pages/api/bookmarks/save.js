@@ -24,7 +24,7 @@ async function handler(req, res) {
       res.status(201).json({ message: 'Bookmark saved successfully', bookmark: newBookmark });
     } catch (error) {
       console.error('Error saving bookmark:', error);
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: 'Internal server error', status:false });
     }
   }
 

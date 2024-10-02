@@ -16,7 +16,7 @@ async function handler(req, res) {
     const { url } = req.query;
 
     if (!url) {
-      return res.status(400).json({ message: 'URL parameter is required' });
+      return res.status(400).json({ message: 'URL parameter is required', status:false });
     }
 
     const bookmark = await UserBookmark.findOne({ link: url });
@@ -24,7 +24,7 @@ async function handler(req, res) {
     if (bookmark) {
       return res.status(200).json(bookmark);
     } else {
-      return res.status(404).json({ message: 'Bookmark not found' });
+      return res.status(404).json({ message: 'Bookmark not found' , status:false});
     }
   } catch (error) {
     console.error('Error fetching bookmark:', error);

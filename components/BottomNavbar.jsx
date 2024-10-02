@@ -31,17 +31,17 @@ const BottomNavbar = () => {
     >
       <BottomNavigationAction
         value="home"
-        icon={value === 'home' ? <HomeIcon className='text-primary-text dark:text-light-text' /> : <HomeOutlinedIcon style={{ color: '#4F7396' }} />}
+        icon={value === 'home' ? <HomeIcon className='text-light-text' /> : <HomeOutlinedIcon style={{ color: '#4F7396' }} />}
         style={{ color: value === 'home' ? '#0D141C' : '#4F7396' }}
       />
       <BottomNavigationAction
         value="services"
-        icon={value === 'services' ? <AddCircleIcon className='text-primary-text dark:text-light-text' /> : <AddCircleOutlineIcon style={{ color: '#4F7396' }} />}
+        icon={value === 'services' ? <AddCircleIcon className='text-light-text' /> : <AddCircleOutlineIcon style={{ color: '#4F7396' }} />}
         style={{ color: value === 'services' ? '#0D141C' : '#4F7396' }}
       />
       <BottomNavigationAction
         value="profile"
-        icon={value === 'profile' ? <PersonIcon className='text-primary-text dark:text-light-text' /> : <PersonOutlinedIcon style={{ color: '#4F7396' }} />}
+        icon={value === 'profile' ? <PersonIcon className='text-light-text' /> : <PersonOutlinedIcon style={{ color: '#4F7396' }} />}
         style={{ color: value === 'profile' ? '#0D141C' : '#4F7396' }}
       />
     </BottomNavigation>
