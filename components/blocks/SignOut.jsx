@@ -11,13 +11,6 @@ const Signout = () => {
       maxAge: -1, // Expire immediately
       path: '/',  // Ensure this applies across all pages
     });
-
-    // Optionally, remove other cookies in the same way
-    document.cookie = cookie.serialize('refreshToken', '', {
-      maxAge: -1,
-      path: '/',
-    });
-
     // Redirect to login page or homepage after signout
     router.push('/auth/signin');
   };

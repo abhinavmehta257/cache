@@ -15,6 +15,13 @@ async function handler(req, res) {
     try {
       await connectDB();
       const user_id = req.user._id; // User ID is now available from the verified token
+
+      const bookmark = await UserBookmark.findOne({link:req.body.link});
+
+      if(bookmark){
+       return res.status(403).json({ message: 'Bookmark already saved'});
+      }
+
       console.log({...req.body, user_id})
 
       const newBookmark = new UserBookmark({...req.body, user_id});

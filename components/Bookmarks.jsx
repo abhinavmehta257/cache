@@ -3,12 +3,12 @@ import BookmarkCollapsible from './blocks/BookmarkCollapsible';
 import Card from './skeletons/Card';
 import BookmarkCard from './blocks/BookmarkCard';
 import { Close } from '@mui/icons-material';
+import Loader from './blocks/Loader';
 
 function Bookmarks() {
-  const [bookmarks, setBookmarks] = useState(null);
+  const [bookmarks, setBookmarks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchesBookmarks, setSearchesBookmarks] = useState([]);
-  
   useEffect(() => {
     const fetchServices = async () => {
       try {
@@ -27,7 +27,19 @@ function Bookmarks() {
   }, []);
   
   const handleDeleteBookmark = (deletedBookmarkId) => {
-    setBookmarks(prevBookmarks => prevBookmarks.filter(bookmark => bookmark._id !== deletedBookmarkId));
+    const updatedBookmarks = bookmarks
+      .map(service => {
+        const filteredBookmarks = service.bookmarks.filter(bookmark => bookmark._id !== deletedBookmarkId);
+        if (filteredBookmarks.length === 0) return null; // Return null for services with no bookmarks
+        return {
+          ...service,
+          bookmarks: filteredBookmarks,
+          count: filteredBookmarks.length,  // Update the count after deletion
+        };
+      })
+      .filter(service => service !== null); // Filter out the null values
+    
+    setBookmarks(updatedBookmarks);
   };
 
   // Debounce function to limit the frequency of invoking the filter function

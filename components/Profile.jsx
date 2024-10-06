@@ -68,7 +68,7 @@ function Profile() {
         </a>
       </div>
 
-      <Signout className='mt-4'/>
+      <Signout/>
     </div>
   );
 }

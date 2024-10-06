@@ -143,9 +143,9 @@ function SigninForm() {
         <div className="mt-6 text-center">
           <Link
             className="text-sm text-gray-700 underline hover:no-underline"
-            href="/reset-password"
+            href="/auth/signup"
           >
-            Forgot password
+            Signup
           </Link>
         </div>
       </>

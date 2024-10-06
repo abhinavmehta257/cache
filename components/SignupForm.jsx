@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { Toaster, toast } from 'react-hot-toast';
 import { Router, useRouter } from 'next/router';
+import Link from 'next/link';
 export const metadata = {
   title: "Sign Up",
   description: "Page description",
@@ -103,7 +104,7 @@ function SignupForm() {
   return (
     <>
       <div className="mb-10">
-        <h1 className="text-4xl font-bold">Register</h1>
+        <h1 className="text-4xl font-bold">Register a new account</h1>
       </div>
 
       {/* Form */}
@@ -188,24 +189,13 @@ function SignupForm() {
 
       {/* Bottom link */}
       <div className="mt-6 text-center">
-        <p className="text-sm text-gray-500">
-          By signing up, you agree to the{" "}
-          <a
-            className="whitespace-nowrap font-medium text-gray-700 underline hover:no-underline"
-            href="#0"
+          <Link
+            className="text-sm text-gray-700 underline hover:no-underline"
+            href="/auth/signin"
           >
-            Terms of Service
-          </a>{" "}
-          and{" "}
-          <a
-            className="whitespace-nowrap font-medium text-gray-700 underline hover:no-underline"
-            href="#0"
-          >
-            Privacy Policy
-          </a>
-          .
-        </p>
-      </div>
+            Signin
+          </Link>
+        </div>
     </>
    
   );
