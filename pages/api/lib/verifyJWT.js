@@ -9,7 +9,7 @@ export const verifyToken = (req, res, next) => {
   if (cors(req, res)) return;
 
   const cookies = cookie.parse(req.headers.cookie || '');
-  const authToken = cookies.authToken || req.headers?.authorization.split(' ')[1];
+  const authToken = cookies.authToken || req.headers?.authorization?.split(' ')[1];
   
   if (!authToken) {
     return res.status(401).json({ message: 'Authorization token missing' });
