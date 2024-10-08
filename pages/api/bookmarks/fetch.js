@@ -10,7 +10,9 @@ async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
-
+  const user_id = req.user._id; 
+  console.log(user_id);
+  
   try {
     await connectDB();
     const { url } = req.query;
@@ -19,7 +21,7 @@ async function handler(req, res) {
       return res.status(400).json({ message: 'URL parameter is required', status:false });
     }
 
-    const bookmark = await UserBookmark.findOne({ link: url });
+    const bookmark = await UserBookmark.findOne({user_id:user_id, link: url });
 
     if (bookmark) {
       return res.status(200).json(bookmark);
