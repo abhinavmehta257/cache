@@ -2,6 +2,7 @@ import { verifyToken } from "../lib/verifyJWT";
 import connectDB from "../lib/connectDB";
 import UserBookmark from "@/model/userBookmark";
 import cors from "../lib/cors";
+import { generateEmbedding } from "@/helpers/generateEmbedding";
 
 async function handler(req, res) {
       // Apply CORS middleware
@@ -16,15 +17,19 @@ async function handler(req, res) {
       await connectDB();
       const user_id = req.user._id; // User ID is now available from the verified token
 
-      const bookmark = await UserBookmark.findOne({link:req.body.link});
+      const bookmark = await UserBookmark.findOne({user_id,link:req.body.link});
 
       if(bookmark){
        return res.status(403).json({ message: 'Bookmark already saved'});
       }
 
       console.log({...req.body, user_id})
+      const {link} = req.body;
+      const embedding = await generateEmbedding(link)
+    
+      const newBookmark = new UserBookmark({...req.body, user_id,embedding});
 
-      const newBookmark = new UserBookmark({...req.body, user_id});
+      // const newBookmark = new UserBookmark({...req.body, user_id});
   
       await newBookmark.save();
   

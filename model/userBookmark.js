@@ -14,6 +14,10 @@ const userBookmarksSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    embedding:{
+        type:Array,
+        required:true
+    },
     author: {
         type: String,
         required: true
