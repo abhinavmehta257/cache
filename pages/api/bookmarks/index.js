@@ -13,7 +13,10 @@ async function handler(req, res) {
         const user_id = new mongoose.Types.ObjectId(req.user._id);
         console.log(user_id);
         
-        const bookmarks = await UserBookmark.find({user_id:user_id});
+        const bookmarks = await UserBookmark.aggregate([
+            { $match: { user_id: { $eq: new mongoose.Types.ObjectId(user_id) } } },
+            { $project: { embedding: 0 } }
+          ]);
         const groupedServices = groupByService(bookmarks);
         return res.status(200).json(groupedServices);
 

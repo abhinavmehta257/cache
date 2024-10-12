@@ -11,6 +11,8 @@ async function handler(req, res) {
 
   // Search bookmarks for the user
   const results = await searchBookmarks(user_id, query);
+  console.log(results);
+  
   // Return the top results, including the bookmark link and content
   return res.status(200).json(results);
 }

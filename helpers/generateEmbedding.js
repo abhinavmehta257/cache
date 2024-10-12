@@ -52,17 +52,19 @@ export async function searchBookmarks(userId, query) {
   const bookmarks = await UserBookmark.aggregate([
     {
       "$vectorSearch": {
+        "exact":false,
         "index": "vector_index",
         "path": "embedding",
         "queryVector": queryEmbedding,
         "numCandidates": 100,
-        "limit": 3,
-        "filter":{ user_id:{$eq: new mongoose.Types.ObjectId(userId)} }
+        "limit": 5,
+        "filter":{ user_id:{$eq: new mongoose.Types.ObjectId(userId)},}
       }
     },
     {
       $project: {
-        embedding: 0
+        "embedding": 0,
+        "score": { "$meta": "vectorSearchScore" }
       }
     }
   ]);

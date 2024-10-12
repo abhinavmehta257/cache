@@ -21,7 +21,7 @@ async function handler(req, res) {
       return res.status(400).json({ message: 'URL parameter is required', status:false });
     }
 
-    const bookmark = await UserBookmark.findOne({user_id:user_id, link: url });
+    const bookmark = await UserBookmark.findOne({user_id:user_id, link: url },{ embedding: 0 });
 
     if (bookmark) {
       return res.status(200).json(bookmark);
