@@ -2,6 +2,7 @@ import UserBookmark from "@/model/userBookmark";
 import connectDB from "../../lib/connectDB";
 import mongoose from "mongoose";
 import { verifyToken } from "../../lib/verifyJWT";
+import Chunk from "@/model/chunk";
 
 async function handler(req, res){
     const { bookmark_id } = req.query;
@@ -22,6 +23,7 @@ async function handler(req, res){
 
     // Find and delete the bookmark by ID
     const deletedBookmark = await UserBookmark.findByIdAndDelete({_id:new mongoose.Types.ObjectId(bookmark_id)});
+    await Chunk.deleteMany({ bookmark_id: bookmark_id })
     console.log(deletedBookmark);
     
     // If the bookmark is not found, return 404

@@ -3,6 +3,8 @@ import connectDB from "../lib/connectDB";
 import UserBookmark from "@/model/userBookmark";
 import cors from "../lib/cors";
 import { generateEmbedding } from "@/helpers/generateEmbedding";
+import { fetchPageContent } from "@/helpers/screapeLink";
+import Chunk from "@/model/chunk";
 
 async function handler(req, res) {
       // Apply CORS middleware
@@ -25,14 +27,20 @@ async function handler(req, res) {
 
       console.log({...req.body, user_id})
       const {link} = req.body;
-      const embedding = await generateEmbedding(link)
-    
-      const newBookmark = new UserBookmark({...req.body, user_id,embedding});
+      // const embedding = await generateEmbedding(link)
 
-      // const newBookmark = new UserBookmark({...req.body, user_id});
-  
+      // const newBookmark = new UserBookmark({...req.body, user_id,content});
+
+      const newBookmark = new UserBookmark({...req.body, user_id});
+
+      const content = await fetchPageContent(link, user_id, newBookmark._id);
+      // const chunks = generateEmbeddingsForChunks(content);
+      const chunks = await Chunk.insertMany(content);
+      // const chunk = await Chunk(content[0]);
+      // await chunk.save();
       await newBookmark.save();
   
+      // res.status(201).json({ message: 'Bookmark saved successfully'});
       res.status(201).json({ message: 'Bookmark saved successfully', bookmark: newBookmark });
     } catch (error) {
       console.error('Error saving bookmark:', error);
