@@ -34,13 +34,18 @@ async function handler(req, res) {
       const newBookmark = new UserBookmark({...req.body, user_id});
 
       const content = await fetchPageContent(link, user_id, newBookmark._id);
-      // const chunks = generateEmbeddingsForChunks(content);
-      const chunks = await Chunk.insertMany(content);
-      // const chunk = await Chunk(content[0]);
-      // await chunk.save();
+
+      // Generate embeddings for each chunk and save
+      const chunksWithEmbeddings = await Promise.all(
+        content.map(async chunk => {
+          const embedding = await generateEmbedding(chunk.content);
+          return { ...chunk, embedding };
+        })
+      );
+      const chunks = await Chunk.insertMany(chunksWithEmbeddings);
+      console.log("chunks saved:",chunks.length);
+
       await newBookmark.save();
-  
-      // res.status(201).json({ message: 'Bookmark saved successfully'});
       res.status(201).json({ message: 'Bookmark saved successfully', bookmark: newBookmark });
     } catch (error) {
       console.error('Error saving bookmark:', error);

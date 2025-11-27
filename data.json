@@ -1,6 +1,5 @@
 [
   {
-    "_id": { "$oid": "671f4c50f203dd1e86971bf0" },
     "created_by": "Secret Galaxy",
     "content": "hello everyone",
     "location": {
@@ -13,7 +12,6 @@
     "__v": 0
   },
   {
-    "_id": { "$oid": "671f4c50f203dd1e86971bf1" },
     "created_by": "Galactic Explorer",
     "content": "Good morning, everyone!",
     "location": {
@@ -26,7 +24,6 @@
     "__v": 0
   },
   {
-    "_id": { "$oid": "671f4c50f203dd1e86971bf2" },
     "created_by": "Space Wanderer",
     "content": "What a beautiful day!",
     "location": {
@@ -39,7 +36,6 @@
     "__v": 0
   },
   {
-    "_id": { "$oid": "671f4c50f203dd1e86971bf3" },
     "created_by": "Stellar Observer",
     "content": "Anyone up for stargazing tonight?",
     "location": {
@@ -52,7 +48,6 @@
     "__v": 0
   },
   {
-    "_id": { "$oid": "671f4c50f203dd1e86971bf4" },
     "created_by": "Cosmic Voyager",
     "content": "Looking forward to tonight’s meteor shower!",
     "location": {

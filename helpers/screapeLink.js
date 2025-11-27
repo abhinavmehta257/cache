@@ -28,14 +28,34 @@ export async function fetchPageContent(url, user_id, bookmark_id) {
 
   const docs = await loader.load();
 
+  // Extract only the body tag content
+  const cheerio = require('cheerio');
+  const bodyDocs = docs.map(doc => {
+    if (doc && doc.pageContent) {
+      // Extract body content
+      const match = doc.pageContent.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+      let bodyHtml = match ? match[1] : doc.pageContent;
+      // Remove script, style, noscript tags
+      const $ = cheerio.load(bodyHtml);
+      $('script, style, noscript').remove();
+      bodyHtml = $.html();
+      return { ...doc, pageContent: bodyHtml };
+    }
+    return doc;
+  });
+
   const splitter = RecursiveCharacterTextSplitter.fromLanguage("html");
   const transformer = new HtmlToTextTransformer();
   
   const sequence = splitter.pipe(transformer);
 
-  const newDocuments = await sequence.invoke(docs);
+  const newDocuments = await sequence.invoke(bodyDocs);
 
-  const chunks = newDocuments.map((chunk)=>{return {content:chunk.pageContent,  metadata:chunk.metadata, user_id, bookmark_id}})
+  // Remove non-content (empty or whitespace-only chunks)
+  const chunks = newDocuments
+    .filter(chunk => chunk.pageContent && chunk.pageContent.trim().length > 0)
+    .map(chunk => ({ content: chunk.pageContent, metadata: chunk.metadata, user_id, bookmark_id }));
+
   console.log(chunks.length);
 
   return chunks;

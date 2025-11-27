@@ -16,6 +16,13 @@ export default async function saveBookmarks(bookmarks) {
 
         // If there are new bookmarks, save them
         if (newBookmarks.length > 0) {
+            // Generate embedding for each new bookmark chunk before saving
+            const { generateEmbedding } = require("./generateEmbedding");
+            for (const bookmark of newBookmarks) {
+                if (bookmark.content) {
+                    bookmark.embedding = await generateEmbedding(bookmark.content);
+                }
+            }
             await UserBookmark.insertMany(newBookmarks);
             console.log(`${newBookmarks.length} new bookmarks inserted.`);
         } else {
