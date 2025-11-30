@@ -1,4 +1,4 @@
-import { Reddit } from '@mui/icons-material'
+import { BookmarkOutlined, Reddit } from '@mui/icons-material'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -15,7 +15,7 @@ function ServiceCard({service}) {
         <div className='flex gap-[16px]'>
             <div className='w-[42px] h-[42px] rounded-[8px] bg-light-surface dark:bg-dark-surface p-2'>
                 {/* <img src={serviceIcon} alt="" /> */}
-                <Reddit className='text-primary-text dark:text-light-text'/>
+                <BookmarkOutlined className="text-primary-text dark:text-light-text"/>
             </div>
             <div className='flex flex-col'>
                 <h2 className="text-primary-text dark:text-light-text text-base font-medium font-['Inter'] leading-normal">{service_name}</h2>

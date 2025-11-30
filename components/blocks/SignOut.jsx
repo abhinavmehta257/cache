@@ -11,6 +11,7 @@ const Signout = () => {
       maxAge: -1, // Expire immediately
       path: '/',  // Ensure this applies across all pages
     });
+    localStorage.removeItem('user');
     // Redirect to login page or homepage after signout
     router.push('/auth/signin');
   };
@@ -19,7 +20,7 @@ const Signout = () => {
     <>
       <button
         onClick={handleSignout}
-        className="bg-red-500 text-white px-4 py-2 rounded-[8px]"
+        className="border-2 border-red-500 text-red-500 w-full px-4 py-2 rounded-[8px]"
       >
         Sign Out
       </button>

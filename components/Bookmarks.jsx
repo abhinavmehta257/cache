@@ -9,19 +9,25 @@ function Bookmarks() {
   const [bookmarks, setBookmarks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchesBookmarks, setSearchesBookmarks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await fetch('/api/bookmarks');
-        if (!response.ok) {
-          throw new Error('Failed to fetch services');
-        }
-        const data = await response.json();
-        setBookmarks(data);
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
+    console.log(isLoading);
+    
+const fetchServices = async () => {
+  try {
+    const response = await fetch('/api/bookmarks');
+    if (!response.ok) {
+      throw new Error('Failed to fetch services');
+    }
+    
+    const data = await response.json();
+    setBookmarks(data);
+    setIsLoading(false);
+  } catch (error) {
+    console.error(error.message);
+    setIsLoading(false);
+  }
+};
 
     fetchServices();
   }, []);
@@ -52,24 +58,42 @@ function Bookmarks() {
     };
   }
 
+  function debounce(func, delay) {
+    let timeout;
+    return function (...args) {
+      const context = this;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(context, args), delay);
+    };
+  }
+
   // Modified filter function with debounce
   const filter = debounce((e) => {
     const typedSearchTerm = e.target.value.trim();
     setSearchTerm(typedSearchTerm);
     
+    if(typedSearchTerm !== ''){ 
+      setIsLoading(true);
+      setSearchTerm(typedSearchTerm);
+      console.log("query db")
+      fetch(`/api/bookmarks/query`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({query:typedSearchTerm})
+			})
+			.then(response => response.json())
+			.then(data => {
+        console.log(data);
+				setSearchesBookmarks(data);
+        setIsLoading(false);
+			})
+			.catch(error => {
+				console.error('Error fetching URL:', error);
+				});
+    }
     let bookmarksFound = [];
-    bookmarks.forEach(services => {
-      services.bookmarks.forEach(bookmark => {
-        const {author, title, body, service_name} = bookmark;
-        if (author.toLowerCase().includes(typedSearchTerm) || 
-            title.toLowerCase().includes(typedSearchTerm) || 
-            body.toLowerCase().includes(typedSearchTerm) || 
-            service_name.toLowerCase().includes(typedSearchTerm)) {
-          bookmarksFound.push(bookmark);
-        }
-      });
-    });
-    
     setSearchesBookmarks(bookmarksFound);
   }, 500);
 
@@ -90,7 +114,11 @@ function Bookmarks() {
         </div>
         <div className='mt-[24px] h-[70vh] overflow-y-auto no-scrollbar'>
         {
-          bookmarks && searchTerm.trim() === '' ? (
+          isLoading ? (
+            <div className='w-full h-full flex justify-center items-center'>
+              <Loader width={"50px"} />
+            </div>
+          ) : (bookmarks && searchTerm.trim() === '' ? (
             bookmarks.map((bookmark, index) => (
               <BookmarkCollapsible key={index} bookmarkService={bookmark} onDelete={handleDeleteBookmark} />
             ))
@@ -100,7 +128,7 @@ function Bookmarks() {
             ))
           ) : (
             <Card />
-          )
+          ))
         }
         </div>
     </div>

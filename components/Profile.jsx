@@ -6,18 +6,26 @@ function Profile() {
   const [user, setUser] = useState(null);
   
   useEffect(() => {
+    
     const fetchUser = async () => {
-      try {
-        const response = await fetch('/api/user');
-        if (!response.ok) {
-          throw new Error('Failed to fetch User');
+      const cached = localStorage.getItem('user');
+      if (cached) {
+        setUser(JSON.parse(cached));
+      }else{
+        try {
+          const response = await fetch('/api/user');
+          if (!response.ok) {
+            throw new Error('Failed to fetch User');
+          }
+          const data = await response.json();
+          localStorage.setItem('user', JSON.stringify(data));
+          setUser(data);
+          console.log(data);
+        } catch (error) {
+          console.error(error.message);
         }
-        const data = await response.json();
-        setUser(data);
-        console.log(data);
-      } catch (error) {
-        console.error(error.message);
       }
+      
     };
 
     fetchUser();
@@ -29,32 +37,37 @@ function Profile() {
 
       {user ? (
         <form action="" method="post">
-          <label
-            className="mb-1 block text-sm font-medium text-light-text"
-            htmlFor="username"
-          >
-            Username
-          </label>
-          <input
-            type="text"
-            defaultValue={user.username}
-            className="p-[8px] focus:border-none border-dark-background rounded-[8px] w-full bg-dark-surface text-light-text"
-            name='username'
-          />
-          <label
+          <div className='my-4'>
+            <label
+              className="mb-1 block text-sm font-medium text-light-text"
+              htmlFor="username"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              defaultValue={user.username}
+              className="p-[8px] focus:border-none border-dark-background rounded-[8px] w-full bg-dark-surface text-light-text"
+              name='username'
+            />
+          </div>
+          <div className='my-4'>
+            <label
             className="mb-1 block text-sm font-medium text-light-text"
             htmlFor="email"
-          >
-            Email
-          </label>
-          <input
-            type="text"
-            defaultValue={user.email}
-            name='email'
-            className="p-[8px] focus:border-none border-dark-background rounded-[8px] w-full bg-dark-surface text-light-text"
-          />
-          <div className='flex mt-4 gap-4'>
-            <button type='submit' className='bg-dark-surface px-4 py-2 rounded-[8px] text-white'> Update</button>
+            >
+              Email
+            </label>
+            <input
+              type="text"
+              defaultValue={user.email}
+              name='email'
+              className="p-[8px] focus:border-none border-dark-background rounded-[8px] w-full bg-dark-surface text-light-text"
+            />
+          </div>
+          
+          <div className='w-full my-4 gap-4'>
+            <button type='submit' className='w-full bg-dark-surface px-4 py-2 rounded-[8px] text-white'> Update</button>
           </div>
         </form>
       ) : null}
@@ -67,8 +80,10 @@ function Profile() {
           <BookmarkOutlined className='mr-2' /> New service Request
         </a>
       </div>
+      <div className='mt-8'>
+        <Signout/>
+      </div>
 
-      <Signout/>
     </div>
   );
 }
