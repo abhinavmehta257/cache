@@ -2,7 +2,20 @@ import User from "@/model/user";
 import connectDB from "../lib/connectDB";
 import jwt from 'jsonwebtoken';
 import cors from "../lib/cors";
+import UserBookmark from "@/model/userBookmark";
 
+const instructions_bookmark ={
+  "post_id": "Extension",
+  "title": "Instructions to get started",
+  "embedding": [],
+  "author": "Squirrel",
+  "body": "Welcome to the Bookmarking Service! Here are some instructions to help you get started.",
+  "thumbnail": "",
+  "link": "https://mycache.netlify.app/instructions",
+  "service_id": null,
+  "service_name": "Wise Squirrel",
+  "__v": 0
+}
 
 const JWT_SECRET = process.env.JWT_SECRET
 export default async function handler(req,res){
@@ -29,7 +42,7 @@ export default async function handler(req,res){
             JWT_SECRET,
             { expiresIn: '1h' } // Token expires in 1 hour
           );
-    
+        const newBookmark = new UserBookmark({...instructions_bookmark,"user_id": newUser._id});
         await newUser.save();
         
         return res.status(201).json({ message: 'User created successfully', authToken: token });
