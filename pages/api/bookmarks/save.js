@@ -5,6 +5,7 @@ import cors from "../lib/cors";
 import { generateEmbedding } from "@/helpers/generateEmbedding";
 import { fetchPageContent } from "@/helpers/screapeLink";
 import Chunk from "@/model/chunk";
+import {getDomainName} from "@/helpers/getDomainName";
 
 async function handler(req, res) {
       // Apply CORS middleware
