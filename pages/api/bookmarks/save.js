@@ -30,8 +30,14 @@ async function handler(req, res) {
       // const embedding = await generateEmbedding(link)
 
       // const newBookmark = new UserBookmark({...req.body, user_id,content});
+      const service_name = getDomainName(req.body.link);
+      const construct_bookmark = {
+        ...req.body,
+        user_id,
+        service_name: req.body.service_name || service_name
+      }
 
-      const newBookmark = new UserBookmark({...req.body, user_id});
+      const newBookmark = new UserBookmark(construct_bookmark);
 
       const content = await fetchPageContent(link, user_id, newBookmark._id);
 
