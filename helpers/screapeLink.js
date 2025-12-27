@@ -51,7 +51,7 @@ export async function fetchPageContent(url, user_id, bookmark_id) {
   const chunks = chunkDocs
     .filter((d) => d.pageContent && d.pageContent.trim().length > 0)
     .map((d) => ({
-      content: d.pageContent.trim(),
+      // content: d.pageContent.trim(),
       metadata: d.metadata,
       user_id,
       bookmark_id,

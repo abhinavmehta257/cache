@@ -13,7 +13,7 @@ const chunk = new mongoose.Schema({
     },
     content: {
         type: String,
-        required: true
+        required: false
     },
     embedding:{
         type:Array,
