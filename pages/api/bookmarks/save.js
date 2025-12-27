@@ -46,7 +46,10 @@ async function handler(req, res) {
       const chunksWithEmbeddings = await Promise.all(
         content.map(async chunk => {
           const embedding = await generateEmbedding(chunk.content);
-          return { ...chunk, embedding };
+          return { 
+            bookmark_id: chunk.bookmark_id,
+            user_id: chunk.user_id
+            , embedding };
         })
       );
       const chunks = await Chunk.insertMany(chunksWithEmbeddings);
